@@ -17,7 +17,7 @@ class PCUsageTracker:
         self.label = tk.Label(root, text="Time on pc: 00:00:00")
         self.label.pack()
 
-        self.gesamt_zeit_in_sekunden = 0
+        self.totaltime = 0
         self.running = True
         self.start_time = time.time()
 
@@ -27,12 +27,12 @@ class PCUsageTracker:
     def update_time(self):
         if self.running:
             current_time = int(time.time() - self.start_time)
-            self.gesamt_zeit_in_sekunden += current_time
-            hours, remainder = divmod(self.gesamt_zeit_in_sekunden, 3600)
+            self.totaltime += current_time
+            hours, remainder = divmod(self.totaltime, 3600)
             minutes, seconds = divmod(remainder, 60)
             time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
             self.label.config(text="Time on pc: " + time_str)
-            if self.gesamt_zeit_in_sekunden > self.maxtime:
+            if self.totaltime > self.maxtime:
                 self.show_break_popup()
             self.start_time = time.time()
         self.root.after(1000, self.update_time)
